@@ -10,23 +10,23 @@ class SnackTests(TestCase):
         self.user = User.objects.create_user(username="tester", email="tester@email.com", password="pass")
 
         self.new_snack = Snack.objects.create(
-            name="Cheetos",
-            description="cheetos description",
+            title="Cashews",
+            description="cashews description",
             purchaser=self.user,
         )
 
     def test_string_representation(self):
-        self.assertEqual(str(self.new_snack), "Cheetos")
+        self.assertEqual(str(self.new_snack), "Cashews")
 
     def test_new_snack_content(self):
-        self.assertEqual(f"{self.new_snack.name}", "Cheetos")
+        self.assertEqual(f"{self.new_snack.title}", "Cashews")
         self.assertEqual(f"{self.new_snack.purchaser}", "tester")
-        self.assertEqual(f"{self.new_snack.description}", "cheetos description")
+        self.assertEqual(f"{self.new_snack.description}", "cashews description")
 
     def test_snack_list_view(self):
         response = self.client.get(reverse("snack_list"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Cheetos")
+        self.assertContains(response, "Cashews")
         self.assertTemplateUsed(response, "snacks/base.html")
         self.assertTemplateUsed(response, "snacks/snack_list.html")
 
@@ -43,8 +43,8 @@ class SnackTests(TestCase):
         response = self.client.post(
             reverse("snack_create"),
             {
-                "name": "Doritos",
-                "description": "doritos description",
+                "name": "Oatmeal",
+                "description": "oatmeal description",
                 "purchaser": self.user.id,
             },
             follow=True,
